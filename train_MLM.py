@@ -2,12 +2,25 @@ from torch.utils.data import Dataset
 from transformers import LineByLineTextDataset, AutoTokenizer, AutoModelForMaskedLM, AutoConfig, DataCollatorForLanguageModeling, TrainingArguments, Trainer
 from config import CFG
 from glob import glob
+from preprocess import preprocess
 from pathlib import Path
+import torch
+import numpy as np
+import os
+import random
 import warnings
 import math
 from tokenizers.implementations import ByteLevelBPETokenizer
 from tokenizers.processors import BertProcessing
-from preprocess import preprocess
+
+def seed_everything(seed=42):
+    random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministic = True
+
 
 def concatenate_files(filenames, outfile):
     with open(outfile, 'w') as outfile:
@@ -17,6 +30,7 @@ def concatenate_files(filenames, outfile):
                     outfile.write(preprocess(line))
 
 if __name__ == "__main__":
+    seed_everything(seed=CFG.seed)
 
     config = AutoConfig.from_pretrained(CFG.model_name)
     model = AutoModelForMaskedLM.from_config(config = config)
