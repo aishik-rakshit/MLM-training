@@ -72,6 +72,7 @@ if __name__ == "__main__":
         per_device_train_batch_size=CFG.batch_size,
         per_device_eval_batch_size=CFG.batch_size,
         fp16=False,
+        num_train_epochs = CFG.epochs,
         logging_steps=logging_steps,
     )
 
