@@ -7,13 +7,14 @@ import warnings
 import math
 from tokenizers.implementations import ByteLevelBPETokenizer
 from tokenizers.processors import BertProcessing
+from preprocess import preprocess
 
 def concatenate_files(filenames, outfile):
     with open(outfile, 'w') as outfile:
         for fname in filenames:
             with open(fname) as infile:
                 for line in infile:
-                    outfile.write(line)
+                    outfile.write(preprocess(line))
 
 if __name__ == "__main__":
 
