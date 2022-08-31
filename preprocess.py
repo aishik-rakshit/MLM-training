@@ -133,10 +133,9 @@ def preprocess(text):
     text = text.lower()
     text = nltk.word_tokenize(text)
     text = [word for word in text if word not in stopwords.words('english')]
-    text = [lm.lemmatize(word, pos='n') for word in text]
+    text = [lm.lemmatize(word, pos='n') for word in text if word.isalnum()]
     for word in text:
         if word in contractions:
             text = text.replace(word, contractions[word])
-    text = [word for word in text if word.isalnum()]
     text = " ".join(text)
     return text

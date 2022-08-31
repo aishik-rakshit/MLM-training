@@ -6,6 +6,7 @@ from preprocess import preprocess
 from pathlib import Path
 import torch
 import numpy as np
+from tqdm import tqdm
 import os
 import random
 import warnings
@@ -24,10 +25,10 @@ def seed_everything(seed=42):
 
 def concatenate_files(filenames, outfile):
     with open(outfile, 'w') as outfile:
-        for fname in filenames:
+        for fname in tqdm(filenames):
             with open(fname) as infile:
                 for line in infile:
-                    outfile.write(preprocess(line))
+                    outfile.write(preprocess(line) + "\n")
 
 if __name__ == "__main__":
     seed_everything(seed=CFG.seed)
@@ -51,7 +52,7 @@ if __name__ == "__main__":
         file_path = CFG.merged_data_train ,
         block_size = 128  # maximum sequence length
     )
-
+    print(len(train_dataset))
     val_dataset = LineByLineTextDataset(
         tokenizer = tokenizer,
         file_path = CFG.merged_data_val ,

@@ -2,7 +2,7 @@ class CFG:
     url = "https://www.investopedia.com/financial-term-dictionary-4769738"
     train_dir = "data"
     tokenizer_dir = "tokenizer"
-    model_name = "klue/roberta-small"
+    model_name = "roberta-base"
     merged_data_train = "merged_data_train.txt"
     merged_data_val = "merged_data_val.txt"
     tokenizer = "tokenizer.json"
